@@ -82,7 +82,7 @@ export default function ExistingFarmerPage() {
         setIsRecordModalOpen(true)
         break
       case "sales-analysis":
-        console.log("Sales analysis - TODO: Implement")
+        window.location.href = "/existing-farmer/sales-analysis"
         break
       case "detailed-analysis":
         console.log("Detailed analysis - TODO: Implement")
