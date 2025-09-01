@@ -119,7 +119,7 @@ export const CropCompositionChart = ({ data }: CropCompositionChartProps) => {
             {chartData
               .sort((a, b) => b.percentage - a.percentage)
               .map((item, index) => (
-                <div key={index} className="flex items-center justify-between">
+                <div key={`item-${item.crop}-${index}`} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div 
                       className="w-3 h-3 rounded-full" 

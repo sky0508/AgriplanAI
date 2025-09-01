@@ -287,3 +287,4 @@ const DEFAULT_DATE_RANGE_DAYS = 90
 
 **作成日**: 2024年12月  
 **最終更新**: 2024年12月
+

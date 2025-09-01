@@ -46,3 +46,4 @@ export interface CropCompositionData {
 }
 
 export type AnalysisPeriod = 'monthly' | 'quarterly' | 'yearly'
+

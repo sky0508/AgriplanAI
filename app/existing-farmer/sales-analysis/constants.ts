@@ -45,3 +45,4 @@ export const MINIMUM_RECORDS_FOR_ANALYSIS = 3
 // デフォルト設定
 export const DEFAULT_CHART_HEIGHT = 320
 export const DEFAULT_DATE_RANGE_DAYS = 90
+

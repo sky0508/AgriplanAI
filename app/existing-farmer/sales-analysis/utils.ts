@@ -274,3 +274,4 @@ export const formatLargeNumber = (value: number): string => {
   }
   return value.toLocaleString()
 }
+

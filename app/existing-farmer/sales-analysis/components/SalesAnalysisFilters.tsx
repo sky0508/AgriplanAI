@@ -112,9 +112,9 @@ export const SalesAnalysisFilters = ({
           <div className="space-y-3 mb-4">
             <Label className="text-sm font-medium text-charcoal">作物</Label>
             <div className="flex flex-wrap gap-2">
-              {availableCrops.map(crop => (
+              {availableCrops.map((crop, index) => (
                 <button
-                  key={crop}
+                  key={`crop-${crop}-${index}`}
                   onClick={() => handleCropToggle(crop)}
                   className={`px-3 py-1 text-sm rounded-full border transition-colors ${
                     filters.crops.includes(crop)
@@ -134,9 +134,9 @@ export const SalesAnalysisFilters = ({
           <div className="space-y-3">
             <Label className="text-sm font-medium text-charcoal">販売チャンネル</Label>
             <div className="flex flex-wrap gap-2">
-              {availableChannels.map(channel => (
+              {availableChannels.map((channel, index) => (
                 <button
-                  key={channel}
+                  key={`channel-${channel}-${index}`}
                   onClick={() => handleChannelToggle(channel)}
                   className={`px-3 py-1 text-sm rounded-full border transition-colors ${
                     filters.channels.includes(channel)

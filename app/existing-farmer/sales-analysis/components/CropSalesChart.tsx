@@ -27,7 +27,7 @@ export const CropSalesChart = ({ data, period }: CropSalesChartProps) => {
         <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
           <p className="font-medium text-charcoal mb-2">{label}</p>
           {payload.map((entry: any, index: number) => (
-            <p key={index} className="text-sm" style={{ color: entry.color }}>
+            <p key={`tooltip-${entry.dataKey}-${index}`} className="text-sm" style={{ color: entry.color }}>
               {`${entry.dataKey}: ${formatCurrency(entry.value)}`}
             </p>
           ))}
@@ -103,7 +103,7 @@ export const CropSalesChart = ({ data, period }: CropSalesChartProps) => {
               {/* 動的に作物ごとのLineを生成 */}
               {availableCrops.map((crop, index) => (
                 <Line
-                  key={crop}
+                  key={`line-${crop}-${index}`}
                   type="monotone"
                   dataKey={crop}
                   stroke={CROP_COLORS[crop as keyof typeof CROP_COLORS] || CHART_COLORS[index % CHART_COLORS.length]}

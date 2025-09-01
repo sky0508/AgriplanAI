@@ -110,7 +110,7 @@ export const ChannelAnalysisChart = ({ data }: ChannelAnalysisChartProps) => {
         <div className="mt-4 pt-4 border-t border-gray-100">
           <div className="space-y-3">
             {chartData.map((channel, index) => (
-              <div key={index} className="flex items-center justify-between">
+              <div key={`channel-${channel.channel}-${index}`} className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-sky-blue rounded-full"></div>
                   <span className="font-medium text-charcoal">{channel.channel}</span>
@@ -136,7 +136,7 @@ export const ChannelAnalysisChart = ({ data }: ChannelAnalysisChartProps) => {
               {chartData
                 .sort((a, b) => b.averagePrice - a.averagePrice)
                 .map((channel, index) => (
-                  <div key={index} className="flex items-center justify-between text-sm">
+                  <div key={`price-${channel.channel}-${index}`} className="flex items-center justify-between text-sm">
                     <span className="text-soil-brown">{channel.channel}</span>
                     <div className="flex items-center gap-2">
                       <span className="text-charcoal font-medium">

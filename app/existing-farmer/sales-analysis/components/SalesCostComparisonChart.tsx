@@ -24,7 +24,7 @@ export const SalesCostComparisonChart = ({ data }: SalesCostComparisonChartProps
         <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
           <p className="font-medium text-charcoal mb-2">{label}</p>
           {payload.map((entry: any, index: number) => (
-            <p key={index} className="text-sm" style={{ color: entry.color }}>
+            <p key={`payload-${entry.dataKey}-${index}`} className="text-sm" style={{ color: entry.color }}>
               {`${entry.dataKey === 'sales' ? '売上' : 'コスト'}: ¥${entry.value.toLocaleString()}`}
             </p>
           ))}

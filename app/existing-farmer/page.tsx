@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ArrowLeft, Plus, TrendingUp, FileText, Calculator, BarChart3 } from "lucide-react"
 import Link from "next/link"
 import { DailyRecordModal } from "@/components/daily-record-modal"
+import { SalesRecordsTable } from "./components/SalesRecordsTable"
 
 interface QuickActionCardProps {
   icon: React.ReactNode
@@ -85,7 +86,7 @@ export default function ExistingFarmerPage() {
         window.location.href = "/existing-farmer/sales-analysis"
         break
       case "detailed-analysis":
-        console.log("Detailed analysis - TODO: Implement")
+        window.location.href = "/existing-farmer/detailed-analysis"
         break
       default:
         console.log(`Selected action: ${action}`)
@@ -181,6 +182,9 @@ export default function ExistingFarmerPage() {
             <MetricCard title="純利益" value="¥120,000" change="+35%" changeType="positive" />
           </div>
         </div>
+
+        {/* Sales Records Table */}
+        <SalesRecordsTable className="mb-8" />
 
         {/* Recent Records */}
         {records.length > 0 && (

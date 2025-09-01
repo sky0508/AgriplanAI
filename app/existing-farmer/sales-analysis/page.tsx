@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, TrendingUp } from 'lucide-react'
+import { ArrowLeft, TrendingUp, Edit } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import type { SalesRecord, AnalysisFilters } from './types'
 import { SalesAnalysisFilters } from './components/SalesAnalysisFilters'
 import { CropSalesChart } from './components/CropSalesChart'
@@ -16,11 +17,13 @@ import {
   getAvailableCrops, 
   getAvailableChannels 
 } from './utils'
+import { initializeData } from '../data-management/utils/sample-data'
 import { MINIMUM_RECORDS_FOR_ANALYSIS } from './constants'
 
 export default function SalesAnalysisPage() {
   const [salesData, setSalesData] = useState<SalesRecord[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
   const [filters, setFilters] = useState<AnalysisFilters>({
     startDate: '2024-10-01',
     endDate: '2024-12-31',
@@ -31,20 +34,20 @@ export default function SalesAnalysisPage() {
 
   // データ初期化
   useEffect(() => {
-    const initializeData = () => {
+    const loadSalesData = () => {
       try {
-        // 将来的には日々の記録モーダルからデータを取得
-        // const savedRecords = localStorage.getItem('daily_records')
-        // if (savedRecords) {
-        //   const records = JSON.parse(savedRecords)
-        //   const salesRecords = records.filter(record => record.type === 'sales')
-        //   setSalesData(salesRecords)
-        // } else {
-        //   setSalesData(generateSampleSalesData())
-        // }
+        // 初期データを確認・作成
+        initializeData()
         
-        // 現在はサンプルデータを使用
-        setSalesData(generateSampleSalesData())
+        // ローカルストレージから売上記録を取得
+        const savedRecords = localStorage.getItem('sales_records')
+        if (savedRecords) {
+          const records = JSON.parse(savedRecords)
+          setSalesData(records)
+        } else {
+          // 初回はサンプルデータを生成
+          setSalesData(generateSampleSalesData())
+        }
       } catch (error) {
         console.error('データの初期化に失敗しました:', error)
         setSalesData(generateSampleSalesData())
@@ -53,7 +56,28 @@ export default function SalesAnalysisPage() {
       }
     }
 
-    initializeData()
+    loadSalesData()
+
+    // データ管理画面からの更新イベントリスナー
+    const handleSalesDataUpdate = (event: CustomEvent) => {
+      try {
+        const { records } = event.detail
+        if (records && Array.isArray(records)) {
+          setSalesData(records)
+          console.log('売上分析データが更新されました:', records.length, '件')
+        }
+      } catch (error) {
+        console.error('データ更新の処理に失敗しました:', error)
+      }
+    }
+
+    // イベントリスナーを追加
+    window.addEventListener('salesDataUpdated', handleSalesDataUpdate as EventListener)
+
+    return () => {
+      // クリーンアップ
+      window.removeEventListener('salesDataUpdated', handleSalesDataUpdate as EventListener)
+    }
   }, [])
 
   // フィルタリングされたデータ
@@ -91,10 +115,17 @@ export default function SalesAnalysisPage() {
               ダッシュボードに戻る
             </Button>
           </Link>
-          <div>
+          <div className="flex-1">
             <h1 className="text-3xl font-bold text-charcoal">売上分析</h1>
             <p className="text-lg text-soil-brown">売上データの詳細分析と可視化</p>
           </div>
+          <Button 
+            onClick={() => router.push('/existing-farmer/data-management')}
+            className="bg-sky-blue text-white hover:bg-sky-blue/90 rounded-xl"
+          >
+            <Edit className="w-4 h-4 mr-2" />
+            データを編集
+          </Button>
         </div>
 
         {/* データサマリー */}
